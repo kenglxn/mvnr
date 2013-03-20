@@ -1,6 +1,6 @@
 fs = require 'fs', _ = require 'underscore', cp = require 'child_process', color = require './color', q = require './q'
 
-class GitR
+class MvnR
   log = (m...) => console.log m...
 
   findRepos = (dir = process.cwd()) =>

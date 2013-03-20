@@ -1,10 +1,8 @@
-gitr: recursive git command line tool
+mvnr: recursive mvn command line tool
 
 ```
-sudo npm install -g gitr
+sudo npm install -g mvnr
 
 #example usage
-gitr status
-gitr pull
-gitr "log --since '1 day ago' --oneline --pretty=format:'%s'"
+mvnr clean install -DskipTests
 ```

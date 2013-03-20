@@ -1,4 +1,4 @@
 argv = process.argv.slice(2)
 
-GitR = require './gitr'
-new GitR().do argv...
+MvnR = require './mvnr'
+new MvnR().do argv...
