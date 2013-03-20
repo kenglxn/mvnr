@@ -1,11 +1,11 @@
-GitR = require '../lib/gitr'
+MvnR = require '../lib/mvnr'
 fs = require 'fs'
 rimraf = require 'rimraf'
 cp = require 'child_process'
 
-gitr = new GitR()
+mvnr = new MvnR()
 
-describe 'gitr', ->
+describe 'mvnr', ->
   directoryStructure = [
     'testDir',
     'testDir/withoutGitRepo',
@@ -30,20 +30,20 @@ describe 'gitr', ->
     rimraf.sync testDir
 
   it 'should execute git command recursively for all git enabled repos', ->
-    expect(gitr.do).toBeDefined()
+    expect(mvnr.do).toBeDefined()
     expect(cp.exec).toBeDefined();
     spyOn(cp, 'exec').andCallFake (cmd, cb) -> cb()
-    gitr.do 'status'
+    mvnr.do 'status'
     expect(cp.exec).toHaveBeenCalled()
     expect(cp.exec.callCount).toBe(2)
     expect(cp.exec.calls[0].args[0]).toBe("git --git-dir=#{process.cwd()}/withGitRepoAtSecondLevel/secondLevel/.git --work-tree=#{process.cwd()}/withGitRepoAtSecondLevel/secondLevel status")
     expect(cp.exec.calls[1].args[0]).toBe("git --git-dir=#{process.cwd()}/withGitRepo/.git --work-tree=#{process.cwd()}/withGitRepo status")
 
   it 'should support splats', ->
-    expect(gitr.do).toBeDefined()
+    expect(mvnr.do).toBeDefined()
     expect(cp.exec).toBeDefined();
     spyOn(cp, 'exec').andCallFake (cmd, cb) -> cb()
-    gitr.do 'diff', '--staged'
+    mvnr.do 'diff', '--staged'
     expect(cp.exec).toHaveBeenCalled()
     expect(cp.exec.callCount).toBe(2)
     expect(cp.exec.calls[0].args[0]).toBe("git --git-dir=#{process.cwd()}/withGitRepoAtSecondLevel/secondLevel/.git --work-tree=#{process.cwd()}/withGitRepoAtSecondLevel/secondLevel diff --staged")

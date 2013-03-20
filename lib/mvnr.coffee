@@ -30,4 +30,4 @@ class MvnR
     q.dequeue fns, =>
     log "#{color.red}no git repos under #{color.yellow}#{process.cwd()}#{color.cls}" if repos.length == 0
 
-exports = module.exports = GitR
+exports = module.exports = MvnR
