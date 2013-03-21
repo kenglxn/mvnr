@@ -54,10 +54,13 @@ describe 'mvnr', ->
     expect(artifacts[2].pom.dependencies[0].dependency.length).toBe(1)
     expect(artifacts[2].pom.dependencies[0].dependency[0].artifactId.toString()).toBe('C')
 
-#  it 'should sort dependencies in order from least dependant to most dependant', ->
-#    expect(mvnr.depsort).toBeDefined()
-#    sorted = mvnr.depsort()
-#    expect(sorted.length).toBe(3)
+  it 'should sort dependencies in order from least dependant to most dependant', ->
+    expect(mvnr.depsort).toBeDefined()
+    sorted = mvnr.depsort()
+    expect(sorted.length).toBe(3)
+    expect(sorted[0].pom.artifactId.toString()).toBe('C')
+#    expect(sorted[1].pom.artifactId.toString()).toBe('E')
+#    expect(sorted[2].pom.artifactId.toString()).toBe('B')
 
 
 #  it 'should execute git command recursively for all git enabled repos', ->

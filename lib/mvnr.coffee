@@ -52,4 +52,36 @@ class MvnR
       artifact.pom.dependencies?[0].dependency = filtered
     projects
 
+  depsort: (artifacts = @artifacts(), sorted = []) =>
+    sorted.push _.reject artifacts, (a) => a.pom.dependencies?[0].dependency.length > 0
+    sorted = _.flatten sorted
+
+    for s in sorted
+      console.log 'sorted', s.pom.artifactId
+    console.log '------'
+
+    artifacts = _.reject artifacts, (a) =>
+      isSorted = false
+      for s in sorted
+        isSorted = true if "#{a.pom.groupId}:#{a.pom.artifactId}" == "#{s.pom.groupId}:#{s.pom.artifactId}"
+      isSorted
+
+    for a in artifacts
+      console.log 'unsorted', a.pom.artifactId
+    console.log '------'
+
+    if artifacts.length == 0
+      console.log 'all sorted out'
+      return sorted
+
+    for artifact in artifacts
+      filtered = _.reject artifact.pom.dependencies?[0].dependency, (d) =>
+        isInSorted = false
+        for a in sorted
+          isInSorted = true if "#{a.pom.groupId}:#{a.pom.artifactId}" == "#{d.groupId}:#{d.artifactId}"
+        isInSorted
+      artifact.pom.dependencies?[0].dependency = filtered
+
+    @depsort(artifacts, sorted)
+
 exports = module.exports = MvnR
