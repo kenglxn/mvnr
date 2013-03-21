@@ -3,17 +3,6 @@ fs = require 'fs', _ = require 'underscore', cp = require 'child_process', color
 class MvnR
   log = (m...) => console.log m...
 
-  findRepos = (dir = process.cwd()) =>
-    dirs = []
-    if fs.statSync(dir).isDirectory()
-      subDirs = fs.readdirSync(dir)
-      if '.git' in subDirs
-        dirs.push dir
-      else
-        _.each subDirs, (subDir) ->
-          dirs.push findRepos dir + '/' + subDir
-    _.flatten dirs
-
   exec = (cmd, repo, cb) =>
     cp.exec "git --git-dir=#{repo}/.git --work-tree=#{repo} #{cmd.join(' ')}", (err, stdout, stderr) ->
       msg = ''
@@ -29,5 +18,16 @@ class MvnR
     _.each repos, (repo) => fns.push (cb) => exec cmd, repo, cb
     q.dequeue fns, =>
     log "#{color.red}no git repos under #{color.yellow}#{process.cwd()}#{color.cls}" if repos.length == 0
+
+  ls: (dir = process.cwd()) =>
+    dirs = []
+    if fs.statSync(dir).isDirectory()
+      subDirs = fs.readdirSync(dir)
+      if 'pom.xml' in subDirs
+        dirs.push dir + '/pom.xml'
+      else
+        _.each subDirs, (subDir) =>
+          dirs.push @ls dir + '/' + subDir
+    _.flatten dirs
 
 exports = module.exports = MvnR

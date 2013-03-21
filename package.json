@@ -13,8 +13,7 @@
         "xml2js":"~0.2.6"
     },
     "devDependencies":{
-        "jasmine-node":"~1.0.28",
-        "rimraf": "2.1.4"
+        "jasmine-node":"~1.0.28"
     },
     "preferGlobal":true,
     "scripts":{
