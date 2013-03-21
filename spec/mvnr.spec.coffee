@@ -15,6 +15,11 @@ describe 'mvnr', ->
    'E',
    'E/pom.xml']
 
+  ['B -> E',
+   'B -> C'
+   'E -> C'
+   'C -> E -> B']
+
   origDir = process.cwd()
   testDir = 'spec/testDir'
 
@@ -32,6 +37,23 @@ describe 'mvnr', ->
     expect(repos).toContain("#{testDir}/A/B/pom.xml")
     expect(repos).toContain("#{testDir}/C/pom.xml")
     expect(repos).toContain("#{testDir}/E/pom.xml")
+
+  it 'should get all artifacts with dependencies filtering out non-relevant dependencies', ->
+    expect(mvnr.artifacts).toBeDefined()
+    artifacts = mvnr.artifacts()
+    expect(artifacts.length).toBe(3)
+    expect(artifacts[0].artifactId.toString()).toBe('B')
+    expect(artifacts[0].dependencies[0].dependency.length).toBe(2)
+    expect(artifacts[0].dependencies[0].dependency[0].artifactId.toString()).toBe('E')
+    expect(artifacts[0].dependencies[0].dependency[1].artifactId.toString()).toBe('C')
+
+    expect(artifacts[1].artifactId.toString()).toBe('C')
+    expect(artifacts[1].dependencies).toBeUndefined()
+
+    expect(artifacts[2].artifactId.toString()).toBe('E')
+    expect(artifacts[2].dependencies[0].dependency.length).toBe(1)
+    expect(artifacts[2].dependencies[0].dependency[0].artifactId.toString()).toBe('C')
+
 
 #  it 'should execute git command recursively for all git enabled repos', ->
 #    expect(mvnr.do).toBeDefined()
