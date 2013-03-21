@@ -42,17 +42,22 @@ describe 'mvnr', ->
     expect(mvnr.artifacts).toBeDefined()
     artifacts = mvnr.artifacts()
     expect(artifacts.length).toBe(3)
-    expect(artifacts[0].artifactId.toString()).toBe('B')
-    expect(artifacts[0].dependencies[0].dependency.length).toBe(2)
-    expect(artifacts[0].dependencies[0].dependency[0].artifactId.toString()).toBe('E')
-    expect(artifacts[0].dependencies[0].dependency[1].artifactId.toString()).toBe('C')
+    expect(artifacts[0].pom.artifactId.toString()).toBe('B')
+    expect(artifacts[0].pom.dependencies[0].dependency.length).toBe(2)
+    expect(artifacts[0].pom.dependencies[0].dependency[0].artifactId.toString()).toBe('E')
+    expect(artifacts[0].pom.dependencies[0].dependency[1].artifactId.toString()).toBe('C')
 
-    expect(artifacts[1].artifactId.toString()).toBe('C')
-    expect(artifacts[1].dependencies).toBeUndefined()
+    expect(artifacts[1].pom.artifactId.toString()).toBe('C')
+    expect(artifacts[1].pom.dependencies).toBeUndefined()
 
-    expect(artifacts[2].artifactId.toString()).toBe('E')
-    expect(artifacts[2].dependencies[0].dependency.length).toBe(1)
-    expect(artifacts[2].dependencies[0].dependency[0].artifactId.toString()).toBe('C')
+    expect(artifacts[2].pom.artifactId.toString()).toBe('E')
+    expect(artifacts[2].pom.dependencies[0].dependency.length).toBe(1)
+    expect(artifacts[2].pom.dependencies[0].dependency[0].artifactId.toString()).toBe('C')
+
+#  it 'should sort dependencies in order from least dependant to most dependant', ->
+#    expect(mvnr.depsort).toBeDefined()
+#    sorted = mvnr.depsort()
+#    expect(sorted.length).toBe(3)
 
 
 #  it 'should execute git command recursively for all git enabled repos', ->

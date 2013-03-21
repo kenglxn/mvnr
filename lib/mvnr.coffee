@@ -41,13 +41,15 @@ class MvnR
     parser = new xml2js.Parser()
     _.each repos, (repo) =>
       parser.parseString fs.readFileSync(repo), (err, result) =>
-        projects.push result.project
+        projects.push
+          pom: result.project
+          repo: repo
         qualifiers.push "#{result.project.groupId}:#{result.project.artifactId}"
     for artifact in projects
-      dependencies = artifact.dependencies?[0].dependency
+      dependencies = artifact.pom.dependencies?[0].dependency
       filtered = _.filter dependencies, (dependency) =>
         _.contains qualifiers, "#{dependency.groupId}:#{dependency.artifactId}"
-      artifact.dependencies?[0].dependency = filtered
+      artifact.pom.dependencies?[0].dependency = filtered
     projects
 
 exports = module.exports = MvnR
