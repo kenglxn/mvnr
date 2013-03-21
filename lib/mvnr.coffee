@@ -26,12 +26,12 @@ class MvnR
   ls: (dir = process.cwd()) =>
     dirs = []
     if fs.statSync(dir).isDirectory()
-      subDirs = fs.readdirSync(dir)
-      if 'pom.xml' in subDirs
+      paths = fs.readdirSync(dir)
+      if 'pom.xml' in paths
         dirs.push dir + '/pom.xml'
       else
-        _.each subDirs, (subDir) =>
-          dirs.push @ls dir + '/' + subDir
+        subDirs = _.filter paths, (path) => path.indexOf('.') != 0 && fs.statSync(dir + '/' + path).isDirectory()
+        _.each subDirs, (subDir) => dirs.push @ls dir + '/' + subDir
     _.flatten dirs
 
   artifacts: =>
