@@ -20,7 +20,7 @@ class MvnR
     _.each projects, (project) =>
       fns.push (cb) =>
         exec cmd, project.repo, cb
-    q.dequeue fns, =>
+    q.dequeue fns.reverse(), =>
     log "#{color.red}no mvn projects under #{color.yellow}#{process.cwd()}#{color.cls}" if projects.length == 0
 
   ls: (dir = process.cwd()) =>
