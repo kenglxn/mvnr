@@ -17,5 +17,6 @@ cd mvnr
 npm test
 ```
 
-License
-http://www.apache.org/licenses/LICENSE-2.0.html
+License:
+
+* http://www.apache.org/licenses/LICENSE-2.0.html
