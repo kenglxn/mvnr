@@ -1,6 +1,4 @@
-mvnr: recursive mvn command line tool
-
-https://npmjs.org/package/mvnr
+mvnr: recursive mvn command line tool - https://npmjs.org/package/mvnr
 
 Install:
 ```
