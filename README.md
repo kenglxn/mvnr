@@ -1,4 +1,5 @@
-mvnr: recursive mvn command line tool - https://npmjs.org/package/mvnr
+mvnr: recursive mvn command line tool 
+* https://npmjs.org/package/mvnr
 
 Install:
 ```
@@ -18,5 +19,4 @@ npm test
 ```
 
 License:
-
 * http://www.apache.org/licenses/LICENSE-2.0.html
