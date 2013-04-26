@@ -1,5 +1,7 @@
 mvnr: recursive mvn command line tool
 
+https://npmjs.org/package/mvnr
+
 Install:
 ```
 sudo npm install -g mvnr
