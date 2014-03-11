@@ -64,27 +64,35 @@ describe 'mvnr', ->
 
   it 'should execute mvn command recursively and in order for all repos', ->
     expect(mvnr.do).toBeDefined()
-    expect(cp.exec).toBeDefined();
-    spyOn(cp, 'exec').andCallFake (cmd, cb) ->
-      cb()
+    expect(cp.spawn).toBeDefined();
+    spyOn(cp, 'spawn').andCallFake ->
+      on: (cmd, cb)->
+        cb()
     mvnr.do 'clean'
-    expect(cp.exec).toHaveBeenCalled()
-    expect(cp.exec.callCount).toBe(3)
-    expect(cp.exec.calls[0].args[0]).toBe("mvn -f #{process.cwd()}/C/pom.xml clean")
-    expect(cp.exec.calls[1].args[0]).toBe("mvn -f #{process.cwd()}/E/pom.xml clean")
-    expect(cp.exec.calls[2].args[0]).toBe("mvn -f #{process.cwd()}/A/B/pom.xml clean")
+    expect(cp.spawn).toHaveBeenCalled()
+    expect(cp.spawn.callCount).toBe(3)
+    expect(cp.spawn.calls[0].args[0]).toBe("mvn")
+    expect(cp.spawn.calls[0].args[1]).toEqual(["-f", "#{process.cwd()}/C/pom.xml", "clean"])
+    expect(cp.spawn.calls[1].args[0]).toBe("mvn")
+    expect(cp.spawn.calls[1].args[1]).toEqual(["-f", "#{process.cwd()}/E/pom.xml", "clean"])
+    expect(cp.spawn.calls[2].args[0]).toBe("mvn")
+    expect(cp.spawn.calls[2].args[1]).toEqual(["-f", "#{process.cwd()}/A/B/pom.xml", "clean"])
 
   it 'should support splats', ->
     expect(mvnr.do).toBeDefined()
-    expect(cp.exec).toBeDefined();
-    spyOn(cp, 'exec').andCallFake (cmd, cb) ->
-      cb()
+    expect(cp.spawn).toBeDefined();
+    spyOn(cp, 'spawn').andCallFake ->
+      on: (cmd, cb)->
+        cb()
     mvnr.do 'clean', 'install'
-    expect(cp.exec).toHaveBeenCalled()
-    expect(cp.exec.callCount).toBe(3)
-    expect(cp.exec.calls[0].args[0]).toBe("mvn -f #{process.cwd()}/C/pom.xml clean install")
-    expect(cp.exec.calls[1].args[0]).toBe("mvn -f #{process.cwd()}/E/pom.xml clean install")
-    expect(cp.exec.calls[2].args[0]).toBe("mvn -f #{process.cwd()}/A/B/pom.xml clean install")
+    expect(cp.spawn).toHaveBeenCalled()
+    expect(cp.spawn.callCount).toBe(3)
+    expect(cp.spawn.calls[0].args[0]).toBe("mvn")
+    expect(cp.spawn.calls[0].args[1]).toEqual(["-f", "#{process.cwd()}/C/pom.xml", "clean", "install"])
+    expect(cp.spawn.calls[1].args[0]).toBe("mvn")
+    expect(cp.spawn.calls[1].args[1]).toEqual(["-f", "#{process.cwd()}/E/pom.xml", "clean", "install"])
+    expect(cp.spawn.calls[2].args[0]).toBe("mvn")
+    expect(cp.spawn.calls[2].args[1]).toEqual(["-f", "#{process.cwd()}/A/B/pom.xml", "clean", "install"])
 
 
 

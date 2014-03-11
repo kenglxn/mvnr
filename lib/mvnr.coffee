@@ -2,17 +2,11 @@ fs = require 'fs', _ = require 'underscore', cp = require 'child_process', color
 xml2js = require 'xml2js'
 
 class MvnR
-  log = (m...) =>
-    console.log m...
 
   exec = (cmd, pom, cb) =>
-    cp.exec "mvn -f #{pom} #{cmd.join(' ')}", (err, stdout, stderr) ->
-      msg = ''
-      msg += "#{stdout}\n#{color.cls}" if stdout?.length > 0
-      msg += "#{color.red}#{err}#{color.cls}" if err?.length > 0
-      msg += "#{color.red}#{stderr}#{color.cls}" if stderr?.length > 0
-      log "#{color.yellow}::#{pom}::#{color.green}\n#{msg}" if msg?.length > 0
-      cb()
+    child = cp.spawn "mvn", _.flatten(["-f", pom, cmd]), 
+      stdio: 'inherit'
+    child.on 'exit', cb
 
   do: (cmd...) =>
     fns = []
