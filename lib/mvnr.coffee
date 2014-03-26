@@ -8,9 +8,7 @@ class MvnR
     log "#{color.yellow}:: #{pom} ::#{color.cls}"
     child = cp.spawn "mvn", _.flatten(["-f", pom, cmd]), 
       stdio: 'inherit'
-    child.on 'exit', ->
-      log "\n"
-      cb()
+    child.on 'exit', cb
 
   do: (cmd...) =>
     fns = []
