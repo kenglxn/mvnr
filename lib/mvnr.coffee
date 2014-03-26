@@ -5,10 +5,12 @@ class MvnR
   log = (m...) => console.log m...
 
   exec = (cmd, pom, cb) =>
-    log "\n\n#{color.yellow}:: #{pom} ::#{color.cls}\n"
+    log "#{color.yellow}:: #{pom} ::#{color.cls}"
     child = cp.spawn "mvn", _.flatten(["-f", pom, cmd]), 
       stdio: 'inherit'
-    child.on 'exit', cb
+    child.on 'exit', ->
+      log "\n"
+      cb()
 
   do: (cmd...) =>
     fns = []
