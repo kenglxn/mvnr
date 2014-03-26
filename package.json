@@ -1,6 +1,6 @@
 {
   "name": "mvnr",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "perform maven commands recursively",
   "keywords": [
     "maven",

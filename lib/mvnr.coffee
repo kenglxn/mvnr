@@ -2,8 +2,10 @@ fs = require 'fs', _ = require 'underscore', cp = require 'child_process', color
 xml2js = require 'xml2js'
 
 class MvnR
+  log = (m...) => console.log m...
 
   exec = (cmd, pom, cb) =>
+    log "\n\n#{color.yellow}:: #{pom} ::#{color.cls}\n"
     child = cp.spawn "mvn", _.flatten(["-f", pom, cmd]), 
       stdio: 'inherit'
     child.on 'exit', cb
