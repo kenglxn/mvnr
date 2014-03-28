@@ -23,6 +23,7 @@ mvnr does do a bit of dependency analysis before executing to ensure it builds t
 
 So the follwing structure:
 
+<pre>
 (cwd)
 ├── A
 │   └── B
@@ -33,12 +34,13 @@ So the follwing structure:
 │   └── pom.xml 
 └── E
     └── pom.xml **(depends on C)**
+</pre>
 
 Will result in the build order:
 
-# C
-# E
-# B
+1. C
+2. E
+3. B
 
 
 ### Building:
