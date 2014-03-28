@@ -27,13 +27,13 @@ So the follwing structure:
 (cwd)
 ├── A
 │   └── B
-│       └── pom.xml **(depends on E & C)**
+│       └── pom.xml   // depends on E & C
 ├── C
 │   ├── D
 │   │   └── pom.xml
 │   └── pom.xml 
 └── E
-    └── pom.xml **(depends on C)**
+    └── pom.xml  // depends on C
 </pre>
 
 Will result in the build order:
