@@ -19,7 +19,7 @@ Any command you can pass to mvn, will work with mvnr.
 
     mvnr clean install -DskipTests
 
-mvnr does do a bit of dependency analysis before executing to ensure it builds the least dependent modules first. This means that if you have a module which has a dependency on another module which also resides under the current working directory (cwd), then mvnr will build the dependency first.
+mvnr does do a bit of dependency analysis before executing to ensure it builds the least dependent modules first. This means that if you have a module which has a dependency on another module which also resides under the current working directory (cwd), then mvnr will build the dependency first. It will also ignore poms in subdirectories where the parent directory contains a pom.
 
 So the follwing structure:
 
@@ -30,7 +30,7 @@ So the follwing structure:
 │       └── pom.xml   // depends on E & C
 ├── C
 │   ├── D
-│   │   └── pom.xml
+│   │   └── pom.xml // child of C, will not be built explicitly, but is assumed to be a child module
 │   └── pom.xml 
 └── E
     └── pom.xml  // depends on C
