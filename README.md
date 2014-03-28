@@ -4,13 +4,42 @@
 
 https://npmjs.org/package/mvnr
 
+### Demo
+
+![Demo](https://github.com/kenglxn/mvnr/raw/master/demo.gif)
+
 ### Install:
 
     sudo npm install -g mvnr
 
 ### Usage:
 
+mvnr does not interpret any commands given to it, but simply ensures that commands are executed on any maven repository under the current working directory.
+Any command you can pass to mvn, will work with mvnr. 
+
     mvnr clean install -DskipTests
+
+mvnr does do a bit of dependency analysis before executing to ensure it builds the least dependent modules first. This means that if you have a module which has a dependency on another module which also resides under the current working directory (cwd), then mvnr will build the dependency first.
+
+So the follwing structure:
+
+(cwd)
+├── A
+│   └── B
+│       └── pom.xml **(depends on E & C)**
+├── C
+│   ├── D
+│   │   └── pom.xml
+│   └── pom.xml 
+└── E
+    └── pom.xml **(depends on C)**
+
+Will result in the build order:
+
+# C
+# E
+# B
+
 
 ### Building:
 
