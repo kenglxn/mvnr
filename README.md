@@ -25,15 +25,15 @@ So the follwing structure:
 
 <pre>
 (cwd)
-├── A
-│   └── B
-│       └── pom.xml   // depends on E & C
-├── C
-│   ├── D
-│   │   └── pom.xml // child of C, will not be built explicitly, but is assumed to be a child module
-│   └── pom.xml 
-└── E
-    └── pom.xml  // depends on C
+  ├── A
+  │   └── B
+  │       └── pom.xml   // depends on E & C
+  ├── C
+  │   ├── D
+  │   │   └── pom.xml // child of C, will not be built explicitly, but is assumed to be a child module
+  │   └── pom.xml 
+  └── E
+     └── pom.xml  // depends on C
 </pre>
 
 Will result in the build order:
